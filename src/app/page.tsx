@@ -118,7 +118,7 @@ export default function Home() {
               </DropdownMenuItem>
               <DropdownMenuItem className="mt-3" asChild>
                 <Button className="rounded-full px-10 py-4 text-2xl" asChild>
-                  <Link href="">Sign In</Link>
+                  <Link href="/auth/sign-in">Sign In</Link>
                 </Button>
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -147,7 +147,7 @@ export default function Home() {
             </li>
             <li>
               <Button className="rounded-full px-10 py-4 text-2xl" asChild>
-                <Link href="">Sign In</Link>
+                <Link href="/auth/sign-in">Sign In</Link>
               </Button>
             </li>
           </ul>
@@ -174,7 +174,7 @@ export default function Home() {
               className="me-5 rounded-full px-10 py-5 text-xl md:px-14 md:py-7"
               asChild
             >
-              <Link href="">Sign In</Link>
+              <Link href="/auth/sign-in">Sign In</Link>
             </Button>
 
             <Button
@@ -182,7 +182,7 @@ export default function Home() {
               variant="outline"
               asChild
             >
-              <Link href="">Sign Up</Link>
+              <Link href="/auth/sign-up">Sign Up</Link>
             </Button>
           </div>
         </div>
