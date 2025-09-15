@@ -3,10 +3,17 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { Menu } from "lucide-react";
 
 // component
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export default function Home() {
   const [activeSection, setActiveSection] = React.useState("home");
@@ -30,6 +37,19 @@ export default function Home() {
     return () => {
       sections.forEach((section) => observer.unobserve(section));
     };
+  }, []);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 20) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const Features = [
@@ -56,7 +76,7 @@ export default function Home() {
   return (
     <>
       <header
-        className={`fixed z-50 flex w-full items-center justify-between px-16 transition-all duration-300 ${
+        className={`fixed z-50 flex w-full items-center justify-between px-1 transition-all duration-300 md:px-16 ${
           isScrolled
             ? "bg-white/90 py-3 shadow-md backdrop-blur-md"
             : "bg-transparent py-6"
@@ -73,8 +93,38 @@ export default function Home() {
           />
         </div>
 
-        <div className="me-10">
-          <ul className="text-primary flex items-center gap-8">
+        <div className="me-5 md:me-10">
+          <DropdownMenu>
+            <DropdownMenuTrigger className="flex md:hidden">
+              <Menu size={40} className="text-primary" />
+            </DropdownMenuTrigger>
+
+            <DropdownMenuContent className="py-3">
+              <DropdownMenuItem
+                className={`text-xl transition ${
+                  activeSection === "home" ? "font-bold" : ""
+                }`}
+                asChild
+              >
+                <Link href="#home">Home</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className={`text-xl transition ${
+                  activeSection === "features" ? "font-bold" : ""
+                }`}
+                asChild
+              >
+                <Link href="#features">Features</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="mt-3" asChild>
+                <Button className="rounded-full px-10 py-4 text-2xl" asChild>
+                  <Link href="">Sign In</Link>
+                </Button>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <ul className="text-primary hidden items-center gap-8 md:flex">
             <li>
               <Link
                 href="#home"
@@ -114,18 +164,21 @@ export default function Home() {
 
         {/* Konten */}
         <div className="relative z-10 container mx-auto mt-20">
-          <h1 className="w-full text-center text-7xl">
+          <h1 className="w-full text-center text-3xl md:text-7xl">
             Buat <span className="text-primary font-bold">Kuis</span> Otomatis
             dari <br /> Materi Belajar
           </h1>
 
           <div className="mt-10 text-center">
-            <Button className="me-5 rounded-full px-14 py-7 text-2xl" asChild>
+            <Button
+              className="me-5 rounded-full px-10 py-5 text-xl md:px-14 md:py-7"
+              asChild
+            >
               <Link href="">Sign In</Link>
             </Button>
 
             <Button
-              className="text-primary border-primary hover:text-primary-foreground rounded-full bg-transparent px-14 py-7 text-2xl"
+              className="text-primary border-primary hover:text-primary-foreground rounded-full bg-transparent px-10 py-5 text-xl md:px-14 md:py-7"
               variant="outline"
               asChild
             >
@@ -137,11 +190,11 @@ export default function Home() {
 
       <section
         id="features"
-        className="container mx-auto flex min-h-screen flex-col items-center justify-center px-16"
+        className="container mx-auto flex min-h-screen flex-col items-center justify-center px-16 py-10 md:py-0"
       >
         <h3 className="mb-10 text-center text-3xl">Features</h3>
 
-        <div className="flex gap-5">
+        <div className="flex flex-col gap-5 md:flex-row">
           {Features.map((feature, index) => (
             <Card className="gap-2 border-2 border-black" key={index}>
               <CardHeader>
