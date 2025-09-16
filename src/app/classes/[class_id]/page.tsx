@@ -1,9 +1,5 @@
 import React from "react";
 
 export default function page() {
-  return (
-    <>
-      <h1>Classes</h1>
-    </>
-  );
+  return <>Detail Class</>;
 }
