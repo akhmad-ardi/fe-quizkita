@@ -1,6 +1,13 @@
 import React from "react";
 import Link from "next/link";
-import { Plus, ArrowLeft, Trash } from "lucide-react";
+import {
+  Plus,
+  ArrowLeft,
+  Trash,
+  UserPlus,
+  Share,
+  UserStar,
+} from "lucide-react";
 
 // component
 import {
@@ -15,6 +22,14 @@ import {
   AlertDialogAction,
 } from "@/components/ui/alert-dialog";
 import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
+import {
   Card,
   CardHeader,
   CardTitle,
@@ -22,6 +37,7 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { FormAddUser } from "./_components/FormAddUser";
 
 type Props = {
   params: Promise<{
@@ -51,7 +67,7 @@ export default async function page({ params }: Props) {
                 </Link>
               </Button>
 
-              {/* Delete Material */}
+              {/* Delete Class */}
               <AlertDialog>
                 <AlertDialogTrigger asChild>
                   <Button variant="destructive">
@@ -89,6 +105,68 @@ export default async function page({ params }: Props) {
                   </AlertDialogFooter>
                 </AlertDialogContent>
               </AlertDialog>
+
+              {/* Add User */}
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button>
+                    <UserPlus />
+                    Add User
+                  </Button>
+                </DialogTrigger>
+
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Add User</DialogTitle>
+                    <DialogDescription>
+                      Adding a user to class
+                    </DialogDescription>
+                  </DialogHeader>
+
+                  <FormAddUser />
+                </DialogContent>
+              </Dialog>
+
+              {/* Link Class */}
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button>
+                    <Share />
+                    Share Class
+                  </Button>
+                </AlertDialogTrigger>
+
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Share Class</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Share class for other user
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+
+                  <AlertDialogFooter>
+                    <AlertDialogCancel asChild>
+                      <Button className="text-destructive hover:bg-destructive border-destructive border bg-white hover:text-white">
+                        Cancel
+                      </Button>
+                    </AlertDialogCancel>
+
+                    <AlertDialogAction asChild>
+                      <Button className="text-primary border-primary !bg-primary hover:!bg-primary/90 border">
+                        <Share /> Copy Class Code
+                      </Button>
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+
+              {/* Leaderboard */}
+              <Button asChild>
+                <Link href={`/classes/1/leaderboard`}>
+                  <UserStar />
+                  Leaderboard
+                </Link>
+              </Button>
             </CardFooter>
           </Card>
         </div>

@@ -1,9 +1,15 @@
 import React from "react";
 import Link from "next/link";
-import { Plus } from "lucide-react";
+import { Plus, HousePlus } from "lucide-react";
 
 // component
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
 import {
   Dialog,
   DialogTrigger,
@@ -14,12 +20,36 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { FormAddClass } from "./_components/FormAddClass";
+import { FormJoinClass } from "./_components/FormJoinClass";
 
 export default function page() {
   return (
     <>
       <section className="container mb-10 px-10">
         <h1 className="my-5 text-center text-4xl font-bold">- Classes -</h1>
+
+        <div className="mb-5">
+          <Card className="border-primary bg-primary/10 border">
+            <CardFooter>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button>
+                    <HousePlus />
+                    Join Class
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Join Class</DialogTitle>
+                    <DialogDescription>Join class</DialogDescription>
+                  </DialogHeader>
+
+                  <FormJoinClass />
+                </DialogContent>
+              </Dialog>
+            </CardFooter>
+          </Card>
+        </div>
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           <Link href="/classes/1">
