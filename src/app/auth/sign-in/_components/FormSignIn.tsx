@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 
 // API
 import { Auth } from "@/api/auth";
+import { SetCookies } from "@/server/set-cookies";
 
 export function FormSignIn() {
   const router = useRouter();
@@ -34,8 +35,10 @@ export function FormSignIn() {
       return toast.error(data.message, { position: "top-center" });
     }
 
-    Cookies.set("refreshToken", data.data?.refreshToken ?? "");
-    Cookies.set("accessToken", data.data?.accessToken ?? "");
+    await SetCookies({
+      accessToken: data.data?.accessToken as string,
+      refreshToken: data.data?.refreshToken as string,
+    });
 
     setLoading(false);
 

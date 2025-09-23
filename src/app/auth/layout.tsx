@@ -1,5 +1,14 @@
 import React from "react";
 
-export default function layout({ children }: { children: React.ReactNode }) {
+// server
+import { isGuest } from "@/server/is-guest";
+
+export default async function layout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  await isGuest();
+
   return <>{children}</>;
 }

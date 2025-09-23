@@ -99,3 +99,38 @@ describe("Refresh Token Endpoint", () => {
     expect(refreshTokenRes.status).equal(200);
   });
 });
+
+describe("Validate Access Token Endpoint", () => {
+  let accessToken: string | undefined;
+  let refreshToken: string | undefined;
+
+  beforeAll(async () => {
+    const signIn = await Auth.SignIn({ username, password });
+    accessToken = signIn.data.data?.accessToken;
+    refreshToken = signIn.data.data?.refreshToken;
+  });
+
+  it("[403] Validate Access Token", async () => {
+    const validateAccessTokenRes = await Auth.ValidateAccessToken({
+      accessToken: "xxxxx",
+    });
+
+    expect(validateAccessTokenRes.status).equal(403);
+  });
+
+  it("[401] Validate Access Token", async () => {
+    const validateAccessTokenRes = await Auth.ValidateAccessToken({
+      accessToken: "",
+    });
+
+    expect(validateAccessTokenRes.status).equal(401);
+  });
+
+  it("[200] Validate Access Token", async () => {
+    const validateAccessTokenRes = await Auth.ValidateAccessToken({
+      accessToken: accessToken as string,
+    });
+
+    expect(validateAccessTokenRes.status).equal(200);
+  });
+});

@@ -26,10 +26,10 @@ import {
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
-  AlertDialogAction,
   AlertDialogCancel,
 } from "./ui/alert-dialog";
 import { Button } from "./ui/button";
+import { FormSignOut } from "./FormSignOut";
 
 export function AppSidebar() {
   const pathname = usePathname();
@@ -114,21 +114,8 @@ export function AppSidebar() {
                         Are you sure?
                       </AlertDialogDescription>
                     </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel asChild>
-                        <Button
-                          variant="outline"
-                          className="border-destructive text-destructive hover:bg-destructive/80 active:bg-destructive justify-start border bg-white hover:text-white active:text-white"
-                        >
-                          No
-                        </Button>
-                      </AlertDialogCancel>
-                      <AlertDialogAction asChild>
-                        <Button className="bg-destructive hover:bg-destructive active:bg-destructive justify-start hover:text-white active:text-white">
-                          Yes
-                        </Button>
-                      </AlertDialogAction>
-                    </AlertDialogFooter>
+
+                    <FormSignOut />
                   </AlertDialogContent>
                 </AlertDialog>
               </SidebarMenuItem>
