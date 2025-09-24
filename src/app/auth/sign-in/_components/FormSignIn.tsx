@@ -1,8 +1,6 @@
 "use client";
 
 import React from "react";
-import { useRouter } from "next/navigation";
-import Cookies from "js-cookie";
 import { Eye, EyeClosed } from "lucide-react";
 import { toast } from "sonner";
 
@@ -16,8 +14,6 @@ import { Auth } from "@/api/auth";
 import { SetCookies } from "@/server/set-cookies";
 
 export function FormSignIn() {
-  const router = useRouter();
-
   const [loading, setLoading] = React.useState<boolean>(false);
   const [username, setUsername] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
@@ -35,14 +31,8 @@ export function FormSignIn() {
       return toast.error(data.message, { position: "top-center" });
     }
 
-    await SetCookies({
-      accessToken: data.data?.accessToken as string,
-      refreshToken: data.data?.refreshToken as string,
-    });
-
     setLoading(false);
-
-    router.push("/dashboard");
+    await SetCookies({ token: data.data?.token });
   }
 
   return (

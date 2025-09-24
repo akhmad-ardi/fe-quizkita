@@ -1,6 +1,5 @@
 export interface ApiResponse {
   message?: string;
-  messages?: SignUpReq;
 }
 
 /**
@@ -24,31 +23,67 @@ export interface SignInReq {
 export interface SignInRes {
   message?: string;
   data?: {
-    accessToken: string;
-    refreshToken: string;
+    token: string;
   };
 }
 
 /**
- * Refresh Token Request and Response
+ * Validate Token Request and Response
  */
-export interface RefreshTokenReq {
-  refreshToken: string;
-}
 
-export interface RefreshTokenRes {
-  message?: string;
-  data?: { accessToken: string };
+export interface ValidatTokenRes {
+  message: string;
+  is_auth: boolean;
 }
 
 /**
- * Validate Access Token Request and Response
+ * Add Class Request and Response
  */
-export interface ValidateAccessTokenReq {
-  accessToken: string;
+export interface AddClassReq {
+  name: string;
 }
 
-export interface ValidateAccessTokenRes {
-  message: string;
-  data: { is_valid: boolean };
+export interface AddClassRes extends ApiResponse {
+  class_id: string;
+  messages: {
+    name: string;
+  };
+}
+
+/**
+ * Join Class Request and Response
+ */
+export interface JoinClassReq {
+  inviteCode: string;
+}
+
+/**
+ * Add User to Class Request and Response
+ */
+export interface AddUserToClassReq {
+  username: string;
+  classId: string;
+}
+
+/**
+ * Get Class Response
+ */
+export interface GetClassesRes extends ApiResponse {
+  data: {
+    classes: [
+      {
+        id: string;
+        name: string;
+        total_quiz: number;
+        created_at: string;
+      },
+    ];
+  };
+}
+
+/**
+ * Delete Class Request and Response
+ */
+export interface DeleteClassReq {
+  classId: string;
 }

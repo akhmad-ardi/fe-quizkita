@@ -3,8 +3,21 @@ import React from "react";
 // component
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
+import { DeleteCookiesComponent } from "@/components/DeleteCookie";
 
-export default function layout({ children }: { children: React.ReactNode }) {
+// server
+import { isAuth } from "@/server/is-auth";
+
+export default async function layout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const { is_auth } = await isAuth();
+  if (!is_auth) {
+    return <DeleteCookiesComponent />;
+  }
+
   return (
     <>
       <SidebarProvider>

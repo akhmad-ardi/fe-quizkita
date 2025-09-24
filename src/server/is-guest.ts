@@ -6,10 +6,9 @@ import { cookies } from "next/headers";
 export async function isGuest() {
   const cookieStore = await cookies();
 
-  const accessToken = cookieStore.get("accessToken");
-  const refreshToken = cookieStore.get("refreshToken");
+  const tokenCookie = cookieStore.get("token");
 
-  if (accessToken && refreshToken) {
+  if (tokenCookie) {
     return redirect("/dashboard");
   }
 }

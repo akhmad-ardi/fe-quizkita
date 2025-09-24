@@ -4,10 +4,7 @@ import {
   ApiResponse,
   SignInReq,
   SignInRes,
-  RefreshTokenReq,
-  RefreshTokenRes,
-  ValidateAccessTokenRes,
-  ValidateAccessTokenReq,
+  ValidatTokenRes,
 } from "@/lib/types";
 
 export class Auth {
@@ -27,22 +24,12 @@ export class Auth {
     });
   }
 
-  static async RefreshToken(data: RefreshTokenReq) {
-    return await requestAPI<RefreshTokenRes>({
-      method: "POST",
-      url: "/auth/refresh-token",
-      headers: {
-        Authorization: data.refreshToken ? `Bearer ${data.refreshToken}` : "",
-      },
-    });
-  }
-
-  static async ValidateAccessToken(data: ValidateAccessTokenReq) {
-    return await requestAPI<ValidateAccessTokenRes>({
+  static async ValidateToken(token: string | undefined) {
+    return await requestAPI<ValidatTokenRes>({
       method: "GET",
-      url: "/auth/validate-access-token",
+      url: "/auth/validate-token",
       headers: {
-        Authorization: data.accessToken ? `Bearer ${data.accessToken}` : "",
+        Authorization: token ? `Bearer ${token}` : "",
       },
     });
   }

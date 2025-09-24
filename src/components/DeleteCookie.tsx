@@ -3,15 +3,15 @@
 import React from "react";
 
 // server
-import { isAuth } from "@/server/is-auth";
+import { DeleteCookies } from "@/server/delete-cookies";
 
-export function IsAuth() {
+export function DeleteCookiesComponent() {
   React.useEffect(() => {
     let mounted = true;
 
     (async () => {
       try {
-        await isAuth();
+        await DeleteCookies();
       } catch (err) {
         console.error("isAuth error:", err);
       }

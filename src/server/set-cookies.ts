@@ -1,16 +1,12 @@
 "use server";
 
+import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 
-export async function SetCookies({
-  accessToken,
-  refreshToken,
-}: {
-  accessToken: string;
-  refreshToken: string;
-}) {
+export async function SetCookies({ token }: { token: string | undefined }) {
   const cookieStore = await cookies();
 
-  cookieStore.set("accessToken", accessToken);
-  cookieStore.set("refreshToken", refreshToken);
+  cookieStore.set("token", token ?? "");
+
+  return redirect("/dashboard");
 }

@@ -69,68 +69,23 @@ describe("Sign In Endpoint", () => {
   });
 });
 
-describe("Refresh Token Endpoint", () => {
-  let accessToken: string | undefined;
-  let refreshToken: string | undefined;
+describe("Validate Token Endpoint", () => {
+  let token: string | undefined;
 
   beforeAll(async () => {
     const signIn = await Auth.SignIn({ username, password });
-    accessToken = signIn.data.data?.accessToken;
-    refreshToken = signIn.data.data?.refreshToken;
-  });
-
-  it("[403] Refresh Token", async () => {
-    const refreshTokenRes = await Auth.RefreshToken({ refreshToken: "xxx" });
-
-    expect(refreshTokenRes.status).equal(403);
-  });
-
-  it("[401] Refresh Token", async () => {
-    const refreshTokenRes = await Auth.RefreshToken({ refreshToken: "" });
-
-    expect(refreshTokenRes.status).equal(401);
-  });
-
-  it("[200] Refresh Token", async () => {
-    const refreshTokenRes = await Auth.RefreshToken({
-      refreshToken: refreshToken ?? "",
-    });
-
-    expect(refreshTokenRes.status).equal(200);
-  });
-});
-
-describe("Validate Access Token Endpoint", () => {
-  let accessToken: string | undefined;
-  let refreshToken: string | undefined;
-
-  beforeAll(async () => {
-    const signIn = await Auth.SignIn({ username, password });
-    accessToken = signIn.data.data?.accessToken;
-    refreshToken = signIn.data.data?.refreshToken;
+    token = signIn.data.data?.token;
   });
 
   it("[403] Validate Access Token", async () => {
-    const validateAccessTokenRes = await Auth.ValidateAccessToken({
-      accessToken: "xxxxx",
-    });
+    const validateTokenRes = await Auth.ValidateToken("xxx");
 
-    expect(validateAccessTokenRes.status).equal(403);
-  });
-
-  it("[401] Validate Access Token", async () => {
-    const validateAccessTokenRes = await Auth.ValidateAccessToken({
-      accessToken: "",
-    });
-
-    expect(validateAccessTokenRes.status).equal(401);
+    expect(validateTokenRes.status).equal(403);
   });
 
   it("[200] Validate Access Token", async () => {
-    const validateAccessTokenRes = await Auth.ValidateAccessToken({
-      accessToken: accessToken as string,
-    });
+    const validateTokenRes = await Auth.ValidateToken(token);
 
-    expect(validateAccessTokenRes.status).equal(200);
+    expect(validateTokenRes.status).equal(200);
   });
 });

@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { Plus, HousePlus } from "lucide-react";
+import { HousePlus } from "lucide-react";
 
 // component
 import {
@@ -22,7 +22,18 @@ import { Button } from "@/components/ui/button";
 import { FormAddClass } from "./_components/FormAddClass";
 import { FormJoinClass } from "./_components/FormJoinClass";
 
-export default function page() {
+// API
+import { Class } from "@/api/class";
+
+// server
+import { GetCookies } from "@/server/get-cookies";
+
+export default async function page() {
+  const { token } = await GetCookies();
+
+  const { status: getClassesStatus, data: getClassesRes } =
+    await Class.GetClasses(token?.value as string);
+
   return (
     <>
       <section className="container mb-10 px-10">
@@ -30,7 +41,7 @@ export default function page() {
 
         <div className="mb-5">
           <Card className="border-primary bg-primary/10 border">
-            <CardFooter>
+            <CardFooter className="gap-2">
               <Dialog>
                 <DialogTrigger asChild>
                   <Button>
@@ -47,47 +58,36 @@ export default function page() {
                   <FormJoinClass />
                 </DialogContent>
               </Dialog>
+
+              <FormAddClass />
             </CardFooter>
           </Card>
         </div>
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-          <Link href="/classes/1">
-            <Card className="border-primary w-full cursor-pointer gap-2 transition hover:shadow-lg">
-              <CardHeader className="mb-0">
-                <CardTitle className="m-0 text-xl font-semibold">
-                  Class Names
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <h4 className="text-md font-normal">
-                  Total Quiz: <span className="font-extrabold">5</span>
-                </h4>
-              </CardContent>
-            </Card>
-          </Link>
-
-          <Dialog>
-            <DialogTrigger asChild>
-              <Card className="border-primary relative w-full cursor-pointer gap-2 transition hover:shadow-lg">
-                <CardContent className="flex h-full items-center justify-center">
-                  <Button className="flex cursor-pointer items-center gap-2">
-                    <Plus />
-                    <span>Add Class</span>
-                  </Button>
-                </CardContent>
-              </Card>
-            </DialogTrigger>
-
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Add Class</DialogTitle>
-                <DialogDescription>Add new class</DialogDescription>
-              </DialogHeader>
-
-              <FormAddClass />
-            </DialogContent>
-          </Dialog>
+          {getClassesStatus === 200 ? (
+            getClassesRes.data.classes.map((_class) => (
+              <Link href={`/classes/${_class.id}`} key={_class.id}>
+                <Card className="border-primary w-full cursor-pointer gap-2 transition hover:shadow-lg">
+                  <CardHeader className="mb-0">
+                    <CardTitle className="m-0 text-xl font-semibold">
+                      {_class.name}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <h4 className="text-md font-normal">
+                      Total Quiz:{" "}
+                      <span className="font-extrabold">
+                        {_class.total_quiz}
+                      </span>
+                    </h4>
+                  </CardContent>
+                </Card>
+              </Link>
+            ))
+          ) : (
+            <></>
+          )}
         </div>
 
         <div className="mt-5 text-center"></div>
