@@ -40,29 +40,27 @@ export default async function page() {
         </div>
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-          {getClassesStatus === 200 ? (
-            getClassesRes.data.classes.map((_class) => (
-              <Link href={`/classes/${_class.id}`} key={_class.id}>
-                <Card className="border-primary w-full cursor-pointer gap-2 transition hover:shadow-lg">
-                  <CardHeader className="mb-0">
-                    <CardTitle className="m-0 text-xl font-semibold">
-                      {_class.name}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <h4 className="text-md font-normal">
-                      Total Quiz:{" "}
-                      <span className="font-extrabold">
-                        {_class.total_quiz}
-                      </span>
-                    </h4>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))
-          ) : (
-            <></>
-          )}
+          {getClassesStatus === 200
+            ? getClassesRes.data.classes.map((_class) => (
+                <Link href={`/classes/${_class.id}`} key={_class.id}>
+                  <Card className="border-primary w-full cursor-pointer gap-2 transition hover:shadow-lg">
+                    <CardHeader className="mb-0">
+                      <CardTitle className="m-0 text-xl font-semibold">
+                        {_class.name}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <h4 className="text-md font-normal">
+                        Total Quiz:{" "}
+                        <span className="font-extrabold">
+                          {_class.total_quiz}
+                        </span>
+                      </h4>
+                    </CardContent>
+                  </Card>
+                </Link>
+              ))
+            : null}
         </div>
 
         <div className="mt-5 text-center"></div>

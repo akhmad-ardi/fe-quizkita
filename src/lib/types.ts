@@ -138,19 +138,48 @@ export interface GetMaterialsRes extends ApiResponse {
 /**
  * Get Material Response
  */
+export interface Questions {
+  id: string;
+  question_text: string;
+  Answers: Array<{
+    id: string;
+    question_id: string;
+    answer_text: string;
+  }>;
+}
+
 export interface GetMaterialRes extends ApiResponse {
   data: {
     material_id: string;
     title: string;
     content: string;
-    questions: Array<{
-      id: string;
-      question_text: string;
-      Answers: Array<{
-        id: string;
-        question_id: string;
-        answer_text: string;
-      }>;
-    }>;
+    questions: Array<Questions>;
+  };
+}
+
+/**
+ * Get Material Request and Response
+ */
+export interface SubmitAnswerReq {
+  answers: Array<{
+    question_id: string;
+    answer_id: string;
+  }>;
+}
+
+export interface Feedback {
+  question_id: string;
+  question_text: string;
+  user_answer: string;
+  correct: boolean;
+  correct_answer: string;
+  explanation: string;
+}
+
+export interface SubmitAnswerRes extends ApiResponse {
+  messages?: { answers: string };
+  data?: {
+    score: number;
+    feedback: Array<Feedback>;
   };
 }
