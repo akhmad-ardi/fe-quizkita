@@ -1,7 +1,7 @@
 import { requestAPI } from "@/lib/axios";
 import {
   SignUpReq,
-  ApiResponse,
+  SignUpRes,
   SignInReq,
   SignInRes,
   ValidatTokenRes,
@@ -9,7 +9,7 @@ import {
 
 export class Auth {
   static async SignUp(data: SignUpReq) {
-    return await requestAPI<ApiResponse>({
+    return await requestAPI<SignUpRes>({
       method: "POST",
       url: "/auth/sign-up",
       data,

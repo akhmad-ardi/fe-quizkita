@@ -83,7 +83,7 @@ describe("Join Class Endpoint", () => {
 
   it("[400] Join Class", async () => {
     const joinClaass = await Class.JoinClass(token, {
-      inviteCode: "",
+      invite_code: "",
     });
 
     expect(joinClaass.status).equal(400);
@@ -91,7 +91,7 @@ describe("Join Class Endpoint", () => {
 
   it("[401] Join Class", async () => {
     const joinClaass = await Class.JoinClass("", {
-      inviteCode: classId,
+      invite_code: classId,
     });
 
     expect(joinClaass.status).equal(401);
@@ -99,7 +99,7 @@ describe("Join Class Endpoint", () => {
 
   it("[404] Join Class", async () => {
     const joinClaass = await Class.JoinClass(token, {
-      inviteCode: "class-id-not-found",
+      invite_code: "class-id-not-found",
     });
 
     expect(joinClaass.status).equal(404);
@@ -107,7 +107,7 @@ describe("Join Class Endpoint", () => {
 
   it("[200] Join Class", async () => {
     const joinClaass = await Class.JoinClass(token, {
-      inviteCode: classId,
+      invite_code: classId,
     });
 
     expect(joinClaass.status).equal(200);
@@ -115,7 +115,7 @@ describe("Join Class Endpoint", () => {
 
   it("[409] Join Class", async () => {
     const joinClaass = await Class.JoinClass(tokenOwner, {
-      inviteCode: classId,
+      invite_code: classId,
     });
 
     expect(joinClaass.status).equal(409);

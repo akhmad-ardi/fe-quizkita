@@ -7,13 +7,14 @@ export async function isAuth() {
   const cookieStore = await cookies();
 
   const tokenCookie = cookieStore.get("token");
+  const userCookie = cookieStore.get("user");
 
-  if (!tokenCookie) {
+  if (!tokenCookie || !userCookie) {
     return { is_auth: false };
   }
 
   const { data: validateTokenRes } = await Auth.ValidateToken(
-    tokenCookie.value
+    tokenCookie?.value
   );
 
   return { is_auth: validateTokenRes.is_auth };

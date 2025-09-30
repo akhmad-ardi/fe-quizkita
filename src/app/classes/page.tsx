@@ -1,6 +1,5 @@
 import React from "react";
 import Link from "next/link";
-import { HousePlus } from "lucide-react";
 
 // component
 import {
@@ -10,15 +9,6 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
-import {
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 import { FormAddClass } from "./_components/FormAddClass";
 import { FormJoinClass } from "./_components/FormJoinClass";
 
@@ -42,22 +32,7 @@ export default async function page() {
         <div className="mb-5">
           <Card className="border-primary bg-primary/10 border">
             <CardFooter className="gap-2">
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button>
-                    <HousePlus />
-                    Join Class
-                  </Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Join Class</DialogTitle>
-                    <DialogDescription>Join class</DialogDescription>
-                  </DialogHeader>
-
-                  <FormJoinClass />
-                </DialogContent>
-              </Dialog>
+              <FormJoinClass />
 
               <FormAddClass />
             </CardFooter>

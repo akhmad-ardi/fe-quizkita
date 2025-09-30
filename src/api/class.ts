@@ -4,9 +4,10 @@ import {
   AddClassReq,
   AddClassRes,
   JoinClassReq,
+  JoinClassRes,
   AddUserToClassReq,
+  AddUserToClassRes,
   GetClassesRes,
-  DeleteClassReq,
 } from "@/lib/types";
 
 export class Class {
@@ -22,10 +23,10 @@ export class Class {
   }
 
   static async JoinClass(token: string | undefined, data: JoinClassReq) {
-    return await requestAPI<ApiResponse>({
+    return await requestAPI<JoinClassRes>({
       method: "POST",
       url: "/classes/join",
-      data: { invite_code: data.inviteCode },
+      data: { invite_code: data.invite_code },
       headers: {
         Authorization: token ? `Bearer ${token}` : "",
       },
@@ -36,7 +37,7 @@ export class Class {
     token: string | undefined,
     data: AddUserToClassReq
   ) {
-    return await requestAPI<ApiResponse>({
+    return await requestAPI<AddUserToClassRes>({
       method: "POST",
       url: `/classes/${data.classId}/user`,
       data: { username: data.username },
@@ -56,10 +57,10 @@ export class Class {
     });
   }
 
-  static async DeleteClass(token: string | undefined, data: DeleteClassReq) {
+  static async DeleteClass(token: string | undefined, classId: string) {
     return await requestAPI<ApiResponse>({
       method: "DELETE",
-      url: `/classes/${data.classId}`,
+      url: `/classes/${classId}`,
       headers: {
         Authorization: token ? `Bearer ${token}` : "",
       },

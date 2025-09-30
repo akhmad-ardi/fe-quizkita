@@ -12,6 +12,10 @@ export interface SignUpReq {
   confirm_password: string;
 }
 
+export interface SignUpRes extends ApiResponse {
+  messages: SignUpReq;
+}
+
 /**
  * Sign In Request and Response
  */
@@ -30,10 +34,22 @@ export interface SignInRes {
 /**
  * Validate Token Request and Response
  */
-
 export interface ValidatTokenRes {
   message: string;
   is_auth: boolean;
+}
+
+/**
+ * Get User Request and Response
+ */
+export interface User {
+  id: string;
+  username: string;
+  fullname: string;
+}
+
+export interface GetUserRes extends ApiResponse {
+  data: { user: User };
 }
 
 /**
@@ -54,7 +70,11 @@ export interface AddClassRes extends ApiResponse {
  * Join Class Request and Response
  */
 export interface JoinClassReq {
-  inviteCode: string;
+  invite_code: string;
+}
+
+export interface JoinClassRes extends ApiResponse {
+  messages: JoinClassReq;
 }
 
 /**
@@ -65,8 +85,12 @@ export interface AddUserToClassReq {
   classId: string;
 }
 
+export interface AddUserToClassRes extends ApiResponse {
+  messages: AddUserToClassReq;
+}
+
 /**
- * Get Class Response
+ * Get Classes Response
  */
 export interface GetClassesRes extends ApiResponse {
   data: {
@@ -82,8 +106,51 @@ export interface GetClassesRes extends ApiResponse {
 }
 
 /**
- * Delete Class Request and Response
+ * Add Material Request and Response
  */
-export interface DeleteClassReq {
-  classId: string;
+export interface AddMaterialReq {
+  class_id: string;
+  title: string;
+  content: string;
+}
+
+export interface AddMaterialRes extends ApiResponse {
+  messages?: AddMaterialReq;
+}
+
+/**
+ * Get Materials Response
+ */
+export interface GetMaterialsRes extends ApiResponse {
+  data: {
+    class_id: string;
+    user_id: string;
+    class_name: string;
+    materials: Array<{
+      id: string;
+      title: string;
+      total_questions: number;
+      created_at: string;
+    }>;
+  };
+}
+
+/**
+ * Get Material Response
+ */
+export interface GetMaterialRes extends ApiResponse {
+  data: {
+    material_id: string;
+    title: string;
+    content: string;
+    questions: Array<{
+      id: string;
+      question_text: string;
+      Answers: Array<{
+        id: string;
+        question_id: string;
+        answer_text: string;
+      }>;
+    }>;
+  };
 }

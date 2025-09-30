@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
-import { ArrowLeft, Trash, Info, Pencil } from "lucide-react";
+import { redirect } from "next/navigation";
+import { ArrowLeft, Info, Pencil } from "lucide-react";
 
 // component
 import {
@@ -14,17 +15,6 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import {
-  AlertDialog,
-  AlertDialogTrigger,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogDescription,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogCancel,
-  AlertDialogAction,
-} from "@/components/ui/alert-dialog";
-import {
   Card,
   CardHeader,
   CardTitle,
@@ -35,6 +25,13 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Button } from "@/components/ui/button";
+import { FormDeleteMaterial } from "./_components/FormDeleteMaterial";
+
+// API
+import { Material } from "@/api/material";
+
+// server
+import { GetCookies } from "@/server/get-cookies";
 
 type Props = {
   params: Promise<{
@@ -46,29 +43,22 @@ type Props = {
 export default async function page({ params }: Props) {
   const { class_id, material_id } = await params;
 
-  const Questions = [
-    {
-      question_text:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem qui minus optio illum deleniti eveniet excepturi placeat laudantium esse voluptatum?",
-      answers: ["A", "B", "C", "D"],
-    },
-    {
-      question_text:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem qui minus optio illum deleniti eveniet excepturi placeat laudantium esse voluptatum?",
-      answers: ["A", "B", "C", "D"],
-    },
-    {
-      question_text:
-        "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptatem qui minus optio illum deleniti eveniet excepturi placeat laudantium esse voluptatum?",
-      answers: ["A", "B", "C", "D"],
-    },
-  ];
+  const { token } = await GetCookies();
+
+  const { status: getMaterialStatus, data: getMaterialRes } =
+    await Material.GetMaterial(token?.value, material_id);
+
+  if (getMaterialStatus >= 400) {
+    return redirect(`/classes/${class_id}`);
+  }
+
+  const Questions = getMaterialRes.data.questions;
 
   return (
     <>
       <section className="container mb-10 px-5 md:px-10">
         <h1 className="my-5 text-center text-4xl font-bold">
-          - Detail Material {material_id} -
+          - {getMaterialRes.data.title} -
         </h1>
 
         <div className="mx-auto mb-3 md:w-2/3">
@@ -87,43 +77,11 @@ export default async function page({ params }: Props) {
 
               <div className="flex gap-3">
                 {/* Delete Material */}
-                <AlertDialog>
-                  <AlertDialogTrigger asChild>
-                    <Button variant="destructive">
-                      <Trash />
-                      Delete
-                    </Button>
-                  </AlertDialogTrigger>
-
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>Delete Material</AlertDialogTitle>
-                      <AlertDialogDescription>
-                        Are you sure?
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-
-                    <AlertDialogFooter>
-                      <AlertDialogCancel asChild>
-                        <Button
-                          variant="destructive"
-                          className="text-destructive hover:bg-destructive border-destructive border bg-white hover:text-white"
-                        >
-                          Cancel
-                        </Button>
-                      </AlertDialogCancel>
-
-                      <AlertDialogAction asChild>
-                        <Button
-                          variant="destructive"
-                          className="text-destructive border-destructive !bg-destructive hover:!bg-destructive/90 border"
-                        >
-                          <Trash /> Delete
-                        </Button>
-                      </AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
+                <FormDeleteMaterial
+                  classId={class_id}
+                  materialId={getMaterialRes.data.material_id}
+                  title={getMaterialRes.data.title}
+                />
 
                 {/* View Quiz */}
                 <Dialog>
@@ -156,13 +114,13 @@ export default async function page({ params }: Props) {
 
                             <CardFooter className="mt-5">
                               <RadioGroup>
-                                {question.answers.map((answer, indexA) => (
+                                {question.Answers.map((answer, indexA) => (
                                   <div
                                     className="flex items-center space-x-2"
                                     key={indexA}
                                   >
                                     <RadioGroupItem
-                                      value={answer}
+                                      value={answer.id}
                                       id={`${indexQ}-option-${indexA}`}
                                       className="border-primary border"
                                       disabled
@@ -171,7 +129,7 @@ export default async function page({ params }: Props) {
                                       htmlFor={`${indexQ}-option-${indexA}`}
                                       className="text-md font-normal"
                                     >
-                                      {answer}
+                                      {answer.answer_text}
                                     </Label>
                                   </div>
                                 ))}
@@ -205,22 +163,11 @@ export default async function page({ params }: Props) {
         <div className="mx-auto md:w-2/3">
           <Card className="border-primary border">
             <CardContent>
-              <h3 className="text-start text-xl font-bold">Material</h3>
+              <h3 className="text-start text-xl font-bold">
+                {getMaterialRes.data.title}
+              </h3>
 
-              <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                Suscipit expedita porro voluptates accusamus, qui labore? Modi
-                neque corrupti, dolore libero vero eligendi a adipisci. Ea sed
-                temporibus, fuga repellat delectus rerum, facere, qui quam
-                maxime cupiditate iure! Optio harum blanditiis accusantium autem
-                id eligendi officiis vero repudiandae, nisi quo assumenda at
-                modi quod officia nobis culpa hic laboriosam commodi! Iusto quos
-                excepturi doloremque veniam optio, consequatur reprehenderit quo
-                minima nostrum labore, est similique ratione aperiam vero
-                voluptates dignissimos omnis dicta voluptatem atque, iste
-                possimus. Rem, possimus quo voluptate tempore mollitia quas eum
-                labore reprehenderit a. Deserunt libero quis at deleniti.
-              </p>
+              <p>{getMaterialRes.data.content}</p>
             </CardContent>
           </Card>
         </div>

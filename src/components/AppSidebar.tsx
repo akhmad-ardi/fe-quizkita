@@ -4,7 +4,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Building2, Power } from "lucide-react";
+import { Home, Building2, Power, User as UserIcon } from "lucide-react";
 
 // component
 import {
@@ -28,8 +28,13 @@ import {
 } from "./ui/alert-dialog";
 import { Button } from "./ui/button";
 import { FormSignOut } from "./FormSignOut";
+import { User } from "@/lib/types";
 
-export function AppSidebar() {
+type Props = {
+  user: User;
+};
+
+export function AppSidebar({ user }: Props) {
   const pathname = usePathname();
 
   return (
@@ -87,6 +92,17 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
+              <SidebarMenuItem className="flex items-center gap-2">
+                <div className="rounded-full bg-gray-300 p-1">
+                  <UserIcon />
+                </div>
+                <div>
+                  <h4 className="text-md font-bold">{user.fullname}</h4>
+                  <h6 className="text-xs font-bold text-gray-700">
+                    {user.username}
+                  </h6>
+                </div>
+              </SidebarMenuItem>
               <SidebarMenuItem>
                 <AlertDialog>
                   <SidebarMenuButton asChild>

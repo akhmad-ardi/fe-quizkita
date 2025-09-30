@@ -11,7 +11,11 @@ import { Button } from "@/components/ui/button";
 
 // API
 import { Auth } from "@/api/auth";
+import { User } from "@/api/user";
+
+// server
 import { SetCookies } from "@/server/set-cookies";
+import { DeleteCookies } from "@/server/delete-cookies";
 
 export function FormSignIn() {
   const [loading, setLoading] = React.useState<boolean>(false);
@@ -24,15 +28,28 @@ export function FormSignIn() {
     setLoading(true);
     e.preventDefault();
 
-    const { status, data } = await Auth.SignIn({ username, password });
+    const { status: signInStatus, data: signInRes } = await Auth.SignIn({
+      username,
+      password,
+    });
 
-    if (status === 400) {
+    if (signInStatus >= 400) {
       setLoading(false);
-      return toast.error(data.message, { position: "top-center" });
+      return toast.error(signInRes.message, { position: "top-center" });
+    }
+
+    const token = signInRes.data?.token;
+
+    const { status: getUserStatus, data: getUserRes } =
+      await User.GetUser(token);
+
+    if (getUserStatus !== 200) {
+      setLoading(false);
+      return toast.error(getUserRes.message, { position: "top-center" });
     }
 
     setLoading(false);
-    await SetCookies({ token: data.data?.token });
+    await SetCookies({ token, user: getUserRes.data.user });
   }
 
   return (

@@ -8,6 +8,7 @@ import { DeleteCookiesComponent } from "@/components/DeleteCookie";
 
 // server
 import { isAuth } from "@/server/is-auth";
+import { GetCookies } from "@/server/get-cookies";
 
 export default async function layout({
   children,
@@ -19,10 +20,12 @@ export default async function layout({
     return <DeleteCookiesComponent />;
   }
 
+  const { user } = await GetCookies();
+
   return (
     <>
       <SidebarProvider>
-        <AppSidebar />
+        <AppSidebar user={user} />
         <main className="w-full pb-10">
           <SidebarTrigger className="text-primary hover:!text-primary mt-1 size-10 hover:!bg-transparent [&_svg:not([class*='size-'])]:size-6" />
 

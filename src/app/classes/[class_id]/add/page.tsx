@@ -3,7 +3,15 @@ import React from "react";
 // component
 import { FormAddMaterial } from "./_components/FormAddMaterial";
 
-export default function page() {
+type Props = {
+  params: Promise<{
+    class_id: string;
+  }>;
+};
+
+export default async function page({ params }: Props) {
+  const { class_id } = await params;
+
   return (
     <>
       <section className="container mb-10 px-5 md:px-10">
@@ -12,7 +20,7 @@ export default function page() {
         </h1>
 
         <div className="mx-auto md:w-2/3">
-          <FormAddMaterial />
+          <FormAddMaterial class_id={class_id} />
         </div>
       </section>
     </>
