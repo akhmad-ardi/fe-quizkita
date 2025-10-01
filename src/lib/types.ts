@@ -92,16 +92,16 @@ export interface AddUserToClassRes extends ApiResponse {
 /**
  * Get Classes Response
  */
+export interface Class {
+  id: string;
+  name: string;
+  total_quiz: number;
+  created_at: string;
+}
+
 export interface GetClassesRes extends ApiResponse {
   data: {
-    classes: [
-      {
-        id: string;
-        name: string;
-        total_quiz: number;
-        created_at: string;
-      },
-    ];
+    classes: Array<Class>;
   };
 }
 
@@ -151,6 +151,7 @@ export interface Questions {
 export interface GetMaterialRes extends ApiResponse {
   data: {
     material_id: string;
+    user_id: string;
     title: string;
     content: string;
     questions: Array<Questions>;
@@ -171,7 +172,7 @@ export interface Feedback {
   question_id: string;
   question_text: string;
   user_answer: string;
-  correct: boolean;
+  is_correct: boolean;
   correct_answer: string;
   explanation: string;
 }
@@ -181,5 +182,34 @@ export interface SubmitAnswerRes extends ApiResponse {
   data?: {
     score: number;
     feedback: Array<Feedback>;
+  };
+}
+
+/**
+ * Get User Quiz Result Response
+ */
+export interface GetUserQuizResultRes extends ApiResponse {
+  data?: {
+    id: string;
+    user_id: string;
+    material_id: string;
+    score: number;
+    completed_at: string;
+  };
+}
+
+/**
+ * Get Leaderboard Response
+ */
+export interface Leaderboard {
+  user_id: string;
+  username: string;
+  fullname: string;
+  total_score: number;
+}
+
+export interface GetLeaderboardRes extends ApiResponse {
+  data?: {
+    leaderboard: Array<Leaderboard>;
   };
 }

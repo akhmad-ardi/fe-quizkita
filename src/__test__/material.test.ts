@@ -1,4 +1,5 @@
 import { describe, it, beforeAll, expect } from "vitest";
+
 import { Auth } from "@/api/auth";
 
 const username = `test_${Date.now()}`;

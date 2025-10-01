@@ -1,11 +1,16 @@
 "use client";
 
-import React from "react";
-import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
+import { useRouter } from "next/navigation";
+import React from "react";
 import { toast } from "sonner";
 
 // component
+import { Quiz } from "@/api/quiz";
+import { Feedback, Questions } from "@/lib/types";
+import { GetCookies } from "@/server/get-cookies";
+
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardHeader,
@@ -18,23 +23,18 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogDescription,
   DialogFooter,
   DialogClose,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Button } from "@/components/ui/button";
 
 // API
-import { Quiz } from "@/api/quiz";
 
 // server
-import { GetCookies } from "@/server/get-cookies";
 
 // lib
-import { Feedback, Questions } from "@/lib/types";
 
 type Props = {
   class_id: string;
@@ -80,7 +80,9 @@ export function FormTakeTheQuiz({ class_id, material_id, questions }: Props) {
       );
     }
 
-    toast.success(submitAnswerRes.data?.score, { position: "top-center" });
+    toast.success(`Your score: ${submitAnswerRes.data?.score}`, {
+      position: "top-center",
+    });
     setOpen(true);
     setFeedback(submitAnswerRes.data?.feedback as Array<Feedback>);
     setLoading(false);
@@ -88,11 +90,11 @@ export function FormTakeTheQuiz({ class_id, material_id, questions }: Props) {
 
   return (
     <>
+      {/* Feedback */}
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="h-fit min-w-3/4">
           <DialogHeader>
-            <DialogTitle>Questions</DialogTitle>
-            <DialogDescription>Preview Questions</DialogDescription>
+            <DialogTitle>Feedback</DialogTitle>
           </DialogHeader>
 
           <ScrollArea className="border-primary h-96 w-full rounded-xl border p-5">
@@ -106,7 +108,23 @@ export function FormTakeTheQuiz({ class_id, material_id, questions }: Props) {
                     <CardTitle className="text-2xl">{indexQ + 1}.</CardTitle>
                   </CardHeader>
 
-                  <CardContent>{fb.question_text}</CardContent>
+                  <CardContent>
+                    <p>{fb.question_text}</p>
+
+                    <p
+                      className={`mt-2 rounded-lg border p-2 ${fb.is_correct ? "border-green-900 bg-green-300 text-green-900" : "border-red-900 bg-red-300 text-red-900"}`}
+                    >
+                      Your answer:{" "}
+                      <span className="font-bold">{fb.user_answer}</span>
+                    </p>
+
+                    <p className="mt-2 rounded-lg border border-gray-900 bg-gray-300 p-2 text-gray-900">
+                      The correct answer:{" "}
+                      <span className="font-bold">{fb.correct_answer}</span>
+                    </p>
+
+                    <p className="mt-2 p-2">{fb.explanation}</p>
+                  </CardContent>
 
                   <CardFooter className="mt-5"></CardFooter>
                 </Card>
@@ -116,8 +134,14 @@ export function FormTakeTheQuiz({ class_id, material_id, questions }: Props) {
 
           <DialogFooter>
             <DialogClose asChild>
-              <Button className="border-primary text-primary border bg-white hover:text-white">
-                Close
+              <Button
+                className="border-primary text-primary border bg-white hover:text-white"
+                onClick={() =>
+                  router.push(`/classes/${class_id}/material/${material_id}`)
+                }
+              >
+                <ArrowLeft />
+                Back
               </Button>
             </DialogClose>
           </DialogFooter>

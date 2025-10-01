@@ -1,9 +1,13 @@
-import React from "react";
+import { Plus, ArrowLeft, UserStar } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { Plus, ArrowLeft, UserStar } from "lucide-react";
+import React from "react";
 
 // component
+import { Material } from "@/api/material";
+import { GetCookies } from "@/server/get-cookies";
+
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardHeader,
@@ -11,16 +15,14 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+
 import { FormAddUser } from "./_components/FormAddUser";
-import { ShareClass } from "./_components/ShareClass";
 import { FormDeleteClass } from "./_components/FormDeleteClass";
+import { ShareClass } from "./_components/ShareClass";
 
 // API
-import { Material } from "@/api/material";
 
 // server
-import { GetCookies } from "@/server/get-cookies";
 
 type Props = {
   params: Promise<{
@@ -78,7 +80,7 @@ export default async function page({ params }: Props) {
 
               {/* Leaderboard */}
               <Button asChild>
-                <Link href={`/classes/1/leaderboard`}>
+                <Link href={`/classes/${class_id}/leaderboard`}>
                   <UserStar />
                   Leaderboard
                 </Link>

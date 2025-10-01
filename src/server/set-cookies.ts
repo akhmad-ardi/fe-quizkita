@@ -1,7 +1,8 @@
 "use server";
 
-import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+
 import { User } from "@/lib/types";
 
 export async function SetCookies({

@@ -1,13 +1,10 @@
+import { redirect } from "next/navigation";
 import React from "react";
 
-// component
-import { FormTakeTheQuiz } from "./_components/FormTakeTheQuiz";
-
-// API
 import { Material } from "@/api/material";
-
-// server
 import { GetCookies } from "@/server/get-cookies";
+
+import { FormTakeTheQuiz } from "./_components/FormTakeTheQuiz";
 
 type Props = {
   params: Promise<{
@@ -23,6 +20,10 @@ export default async function page({ params }: Props) {
 
   const { status: getMaterialStatus, data: getMaterialRes } =
     await Material.GetMaterial(token?.value, material_id);
+
+  if (getMaterialStatus > 400) {
+    return redirect(`/classes/${class_id}/material/${material_id}`);
+  }
 
   return (
     <>

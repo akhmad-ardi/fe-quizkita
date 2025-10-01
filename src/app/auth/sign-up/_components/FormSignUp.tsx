@@ -1,16 +1,14 @@
 "use client";
 
-import React from "react";
 import { Eye, EyeClosed } from "lucide-react";
+import React from "react";
 import { toast } from "sonner";
 
-// component
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-
-// API
 import { Auth } from "@/api/auth";
+
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 export function FormSignUp() {
   const [loading, setLoading] = React.useState<boolean>(false);

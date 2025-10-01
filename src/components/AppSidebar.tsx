@@ -1,12 +1,24 @@
 "use client";
 
-import React from "react";
+import { Home, Building2, Power, User as UserIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Building2, Power, User as UserIcon } from "lucide-react";
+import React from "react";
 
 // component
+import { User } from "@/lib/types";
+
+import { FormSignOut } from "./FormSignOut";
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogContent,
+  AlertDialogDescription,
+} from "./ui/alert-dialog";
+import { Button } from "./ui/button";
 import {
   Sidebar,
   SidebarHeader,
@@ -18,17 +30,7 @@ import {
   SidebarMenuButton,
   SidebarFooter,
 } from "./ui/sidebar";
-import {
-  AlertDialog,
-  AlertDialogTrigger,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogContent,
-  AlertDialogDescription,
-} from "./ui/alert-dialog";
-import { Button } from "./ui/button";
-import { FormSignOut } from "./FormSignOut";
-import { User } from "@/lib/types";
+
 
 type Props = {
   user: User;

@@ -1,9 +1,9 @@
-import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import React from "react";
 
 // component
-import { FormSignIn } from "./_components/FormSignIn";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardHeader,
@@ -11,7 +11,8 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+
+import { FormSignIn } from "./_components/FormSignIn";
 
 export default function page() {
   return (

@@ -1,11 +1,14 @@
 "use client";
 
-import React from "react";
-import { useRouter } from "next/navigation";
 import { Trash } from "lucide-react";
+import { useRouter } from "next/navigation";
+import React from "react";
 import { toast } from "sonner";
 
 // component
+import { Class } from "@/api/class";
+import { GetCookies } from "@/server/get-cookies";
+
 import {
   AlertDialog,
   AlertDialogTrigger,
@@ -19,10 +22,8 @@ import {
 import { Button } from "@/components/ui/button";
 
 // API
-import { Class } from "@/api/class";
 
 // server
-import { GetCookies } from "@/server/get-cookies";
 
 type Props = {
   classId: string;

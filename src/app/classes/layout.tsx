@@ -1,13 +1,14 @@
 import React from "react";
 
 // component
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { GetCookies } from "@/server/get-cookies";
+import { isAuth } from "@/server/is-auth";
+
 import { AppSidebar } from "@/components/AppSidebar";
 import { DeleteCookiesComponent } from "@/components/DeleteCookie";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 
 // server
-import { isAuth } from "@/server/is-auth";
-import { GetCookies } from "@/server/get-cookies";
 
 export default async function layout({
   children,

@@ -8,6 +8,7 @@ import {
   AddUserToClassReq,
   AddUserToClassRes,
   GetClassesRes,
+  GetLeaderboardRes,
 } from "@/lib/types";
 
 export class Class {
@@ -63,6 +64,16 @@ export class Class {
       url: `/classes/${classId}`,
       headers: {
         Authorization: token ? `Bearer ${token}` : "",
+      },
+    });
+  }
+
+  static async GetLeaderboard(token: string | undefined, classId: string) {
+    return await requestAPI<GetLeaderboardRes>({
+      method: "GET",
+      url: `/classes/${classId}/leaderboard`,
+      headers: {
+        Authorization: `Bearer ${token}`,
       },
     });
   }

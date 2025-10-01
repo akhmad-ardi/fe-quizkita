@@ -1,12 +1,12 @@
 "use client";
 
-import React from "react";
 import { UserPlus } from "lucide-react";
+import React from "react";
 import { toast } from "sonner";
 
-// component
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
+import { Class } from "@/api/class";
+import { GetCookies } from "@/server/get-cookies";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -18,12 +18,8 @@ import {
   DialogFooter,
   DialogClose,
 } from "@/components/ui/dialog";
-
-// API
-import { Class } from "@/api/class";
-
-// server
-import { GetCookies } from "@/server/get-cookies";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 type Props = {
   classId: string;

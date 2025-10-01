@@ -1,7 +1,8 @@
 "use server";
 
-import { User } from "@/lib/types";
 import { cookies } from "next/headers";
+
+import { User } from "@/lib/types";
 
 export async function GetCookies() {
   const cookieStore = await cookies();

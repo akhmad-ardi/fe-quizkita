@@ -1,7 +1,7 @@
 import "./globals.css";
-import React from "react";
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
+import React from "react";
 
 // component
 import { Toaster } from "@/components/ui/sonner";

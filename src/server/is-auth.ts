@@ -1,6 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
+
 import { Auth } from "@/api/auth";
 
 export async function isAuth() {

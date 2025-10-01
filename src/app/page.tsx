@@ -1,11 +1,12 @@
 "use client";
 
-import React from "react";
+import { Menu } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Menu } from "lucide-react";
+import React from "react";
 
-// component
+import { isAuth as IsAuth } from "@/server/is-auth";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import {
@@ -19,7 +20,15 @@ export default function Home() {
   const [activeSection, setActiveSection] = React.useState("home");
   const [isScrolled, setIsScrolled] = React.useState(false);
 
+  const [isAuth, setIsAuth] = React.useState<boolean>(false);
+
   React.useEffect(() => {
+    (async () => {
+      const { is_auth } = await IsAuth();
+
+      setIsAuth(is_auth);
+    })();
+
     const sections = document.querySelectorAll("section");
     const observer = new IntersectionObserver(
       (entries) => {
@@ -116,11 +125,19 @@ export default function Home() {
               >
                 <Link href="#features">Features</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem className="mt-3" asChild>
-                <Button className="rounded-full px-10 py-4 text-2xl" asChild>
-                  <Link href="/auth/sign-in">Sign In</Link>
-                </Button>
-              </DropdownMenuItem>
+              {isAuth ? (
+                <DropdownMenuItem className="mt-3" asChild>
+                  <Button className="rounded-full px-10 py-4 text-2xl" asChild>
+                    <Link href="/dashboard">Dashboard</Link>
+                  </Button>
+                </DropdownMenuItem>
+              ) : (
+                <DropdownMenuItem className="mt-3" asChild>
+                  <Button className="rounded-full px-10 py-4 text-2xl" asChild>
+                    <Link href="/auth/sign-in">Sign In</Link>
+                  </Button>
+                </DropdownMenuItem>
+              )}
             </DropdownMenuContent>
           </DropdownMenu>
 
@@ -146,9 +163,15 @@ export default function Home() {
               </Link>
             </li>
             <li>
-              <Button className="rounded-full px-10 py-4 text-2xl" asChild>
-                <Link href="/auth/sign-in">Sign In</Link>
-              </Button>
+              {isAuth ? (
+                <Button className="rounded-full px-10 py-4 text-2xl" asChild>
+                  <Link href="/dashboard">Dashboard</Link>
+                </Button>
+              ) : (
+                <Button className="rounded-full px-10 py-4 text-2xl" asChild>
+                  <Link href="/auth/sign-in">Sign In</Link>
+                </Button>
+              )}
             </li>
           </ul>
         </div>
@@ -170,20 +193,31 @@ export default function Home() {
           </h1>
 
           <div className="mt-10 text-center">
-            <Button
-              className="me-5 rounded-full px-10 py-5 text-xl md:px-14 md:py-7"
-              asChild
-            >
-              <Link href="/auth/sign-in">Sign In</Link>
-            </Button>
+            {isAuth ? (
+              <Button
+                className="me-5 rounded-full px-10 py-5 text-xl md:px-14 md:py-7"
+                asChild
+              >
+                <Link href="/dashboard">Dashboard</Link>
+              </Button>
+            ) : (
+              <>
+                <Button
+                  className="me-5 rounded-full px-10 py-5 text-xl md:px-14 md:py-7"
+                  asChild
+                >
+                  <Link href="/auth/sign-in">Sign In</Link>
+                </Button>
 
-            <Button
-              className="text-primary border-primary hover:text-primary-foreground rounded-full bg-transparent px-10 py-5 text-xl md:px-14 md:py-7"
-              variant="outline"
-              asChild
-            >
-              <Link href="/auth/sign-up">Sign Up</Link>
-            </Button>
+                <Button
+                  className="text-primary border-primary hover:text-primary-foreground rounded-full bg-transparent px-10 py-5 text-xl md:px-14 md:py-7"
+                  variant="outline"
+                  asChild
+                >
+                  <Link href="/auth/sign-up">Sign Up</Link>
+                </Button>
+              </>
+            )}
           </div>
         </div>
       </section>

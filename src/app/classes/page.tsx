@@ -1,7 +1,10 @@
-import React from "react";
 import Link from "next/link";
+import React from "react";
 
 // component
+import { Class } from "@/api/class";
+import { GetCookies } from "@/server/get-cookies";
+
 import {
   Card,
   CardHeader,
@@ -9,14 +12,13 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
+
 import { FormAddClass } from "./_components/FormAddClass";
 import { FormJoinClass } from "./_components/FormJoinClass";
 
 // API
-import { Class } from "@/api/class";
 
 // server
-import { GetCookies } from "@/server/get-cookies";
 
 export default async function page() {
   const { token } = await GetCookies();

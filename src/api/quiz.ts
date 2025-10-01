@@ -1,5 +1,9 @@
 import { requestAPI } from "@/lib/axios";
-import { SubmitAnswerReq, SubmitAnswerRes } from "@/lib/types";
+import {
+  GetUserQuizResultRes,
+  SubmitAnswerReq,
+  SubmitAnswerRes,
+} from "@/lib/types";
 
 export class Quiz {
   static async SubmitAnswer(
@@ -14,6 +18,19 @@ export class Quiz {
         Authorization: `Bearer ${token}`,
       },
       data,
+    });
+  }
+
+  static async GetQuizUserResult(
+    token: string | undefined,
+    material_id: string
+  ) {
+    return requestAPI<GetUserQuizResultRes>({
+      method: "GET",
+      url: `/quiz/${material_id}`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
   }
 }

@@ -1,8 +1,13 @@
-import React from "react";
-import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
+import { redirect } from "next/navigation";
+import React from "react";
 
-// component
+import { Class } from "@/api/class";
+import { GetCookies } from "@/server/get-cookies";
+
+import { Button } from "@/components/ui/button";
+import { Card, CardFooter } from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -11,8 +16,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Card, CardFooter } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 
 type Props = {
   params: Promise<{
@@ -23,33 +26,14 @@ type Props = {
 export default async function page({ params }: Props) {
   const { class_id } = await params;
 
-  const Users = [
-    {
-      username: "test_1",
-      fullname: "test 1",
-      score: 100,
-    },
-    {
-      username: "test_1",
-      fullname: "test 1",
-      score: 100,
-    },
-    {
-      username: "test_1",
-      fullname: "test 1",
-      score: 100,
-    },
-    {
-      username: "test_1",
-      fullname: "test 1",
-      score: 100,
-    },
-    {
-      username: "test_1",
-      fullname: "test 1",
-      score: 100,
-    },
-  ];
+  const { token } = await GetCookies();
+
+  const { status: getLeaderboarStatus, data: getLeaderboardRes } =
+    await Class.GetLeaderboard(token?.value, class_id);
+
+  if (getLeaderboarStatus > 400) {
+    return redirect("/classes");
+  }
 
   return (
     <>
@@ -86,24 +70,26 @@ export default async function page({ params }: Props) {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {Users.map((u, index) => (
+              {getLeaderboardRes.data?.leaderboard.map((user, index) => (
                 <TableRow
                   key={index}
                   className={`${index % 2 !== 0 ? "bg-primary/30 hover:bg-primary/20" : "bg-primary/70 hover:bg-primary/50"}`}
                 >
                   <TableCell
-                    className={`text-center font-bold ${Users.length === index + 1 && "rounded-bl-xl"}`}
+                    className={`text-center font-bold ${getLeaderboardRes.data?.leaderboard.length === index + 1 && "rounded-bl-xl"}`}
                   >
                     {index + 1}
                   </TableCell>
-                  {/* <TableCell>{u.username}</TableCell> */}
-                  <TableCell>{u.fullname}</TableCell>
+                  {/* <TableCell>{user.username}</TableCell> */}
+                  <TableCell>{user.fullname}</TableCell>
                   <TableCell
                     className={
-                      Users.length === index + 1 ? "rounded-br-xl" : ""
+                      getLeaderboardRes.data?.leaderboard.length === index + 1
+                        ? "rounded-br-xl"
+                        : ""
                     }
                   >
-                    {u.score}
+                    {user.total_score}
                   </TableCell>
                 </TableRow>
               ))}

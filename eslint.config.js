@@ -6,6 +6,7 @@ import reactHooks from "eslint-plugin-react-hooks";
 import jsxA11y from "eslint-plugin-jsx-a11y";
 import importPlugin from "eslint-plugin-import";
 import tailwind from "@poupe/eslint-plugin-tailwindcss";
+import globals from "globals"; // ✅ ambil globals environment
 
 export default [
   js.configs.recommended,
@@ -31,9 +32,11 @@ export default [
         ecmaFeatures: { jsx: true },
       },
       globals: {
-        window: "readonly",
-        document: "readonly",
-        KeyboardEvent: "readonly",
+        ...globals.browser,
+        ...globals.node
+        // window: "readonly",
+        // document: "readonly",
+        // KeyboardEvent: "readonly",
       },
     },
     plugins: {

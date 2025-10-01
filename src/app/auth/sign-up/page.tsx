@@ -1,9 +1,8 @@
-import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import React from "react";
 
-// component
-import { FormSignUp } from "./_components/FormSignUp";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardHeader,
@@ -11,7 +10,8 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+
+import { FormSignUp } from "./_components/FormSignUp";
 
 export default function page() {
   return (
