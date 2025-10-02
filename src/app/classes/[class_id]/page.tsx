@@ -20,10 +20,6 @@ import { FormAddUser } from "./_components/FormAddUser";
 import { FormDeleteClass } from "./_components/FormDeleteClass";
 import { ShareClass } from "./_components/ShareClass";
 
-// API
-
-// server
-
 type Props = {
   params: Promise<{
     class_id: string;
