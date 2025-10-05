@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
+import Head from "next/head";
 import React from "react";
 
 // component
@@ -22,6 +23,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-scroll-behavior="smooth">
+      <Head>
+        <meta name="dicoding:email" content="akhmad.ardiansyah1711@gmail.com" />
+      </Head>
       <body className={`${openSans.variable} antialiased`}>
         {children}
         <Toaster />
