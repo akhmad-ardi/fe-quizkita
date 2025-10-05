@@ -14,6 +14,10 @@ const openSans = Open_Sans({
 
 export const metadata: Metadata = {
   title: "QuizKita",
+  description: "Platform edukasi berbasis kuis",
+  other: {
+    "dicoding:email": "akhmad.ardiansyah1711@gmail.com",
+  },
 };
 
 export default function RootLayout({
@@ -23,9 +27,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-scroll-behavior="smooth">
-      <Head>
-        <meta name="dicoding:email" content="akhmad.ardiansyah1711@gmail.com" />
-      </Head>
       <body className={`${openSans.variable} antialiased`}>
         {children}
         <Toaster />
