@@ -6,7 +6,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 
-// component
 import { User } from "@/lib/types";
 
 import { FormSignOut } from "./FormSignOut";
@@ -30,7 +29,6 @@ import {
   SidebarMenuButton,
   SidebarFooter,
 } from "./ui/sidebar";
-
 
 type Props = {
   user: User;
@@ -94,16 +92,18 @@ export function AppSidebar({ user }: Props) {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              <SidebarMenuItem className="flex items-center gap-2">
-                <div className="rounded-full bg-gray-300 p-1">
-                  <UserIcon />
-                </div>
-                <div>
-                  <h4 className="text-md font-bold">{user.fullname}</h4>
-                  <h6 className="text-xs font-bold text-gray-700">
-                    {user.username}
-                  </h6>
-                </div>
+              <SidebarMenuItem>
+                <SidebarMenuButton className="flex w-full items-center justify-start">
+                  <div className="rounded-full bg-gray-300 p-[1px]">
+                    <UserIcon size={20} />
+                  </div>
+                  <div>
+                    <h4 className="text-md font-bold">{user.fullname}</h4>
+                    <h6 className="text-xs font-bold text-gray-700">
+                      {user.username}
+                    </h6>
+                  </div>
+                </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <AlertDialog>
